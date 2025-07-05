@@ -1,4 +1,4 @@
-using Lib.Repository.Entities;
+﻿using Lib.Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,6 +8,23 @@ public class MonsterExtendedMapping: IEntityTypeConfiguration<Monster>
 {
     public void Configure(EntityTypeBuilder<Monster> builder)
     {
-         // @TODO missing implementation
+        builder.ToTable("Monsters");
+
+        builder.HasKey(m => m.Id);
+
+        builder.Property(m => m.Id)
+            .ValueGeneratedOnAdd();
+
+        builder.Property(m => m.Name)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.Property(m => m.Attack).IsRequired();
+        builder.Property(m => m.Defense).IsRequired();
+        builder.Property(m => m.Speed).IsRequired();
+        builder.Property(m => m.Hp).IsRequired();
+        builder.Property(m => m.ImageUrl).HasMaxLength(300);
     }
+
+
 }
