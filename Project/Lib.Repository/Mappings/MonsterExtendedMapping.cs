@@ -24,7 +24,20 @@ public class MonsterExtendedMapping: IEntityTypeConfiguration<Monster>
         builder.Property(m => m.Speed).IsRequired();
         builder.Property(m => m.Hp).IsRequired();
         builder.Property(m => m.ImageUrl).HasMaxLength(300);
+
+        builder.HasMany<Battle>()
+            .WithOne(b => b.MonsterARelation!)
+            .HasForeignKey(b => b.MonsterA)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasMany<Battle>()
+            .WithOne(b => b.MonsterBRelation!)
+            .HasForeignKey(b => b.MonsterB)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasMany<Battle>()
+            .WithOne(b => b.WinnerRelation!)
+            .HasForeignKey(b => b.Winner)
+            .OnDelete(DeleteBehavior.NoAction);
     }
-
-
 }

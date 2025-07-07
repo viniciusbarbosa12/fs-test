@@ -18,25 +18,26 @@ public static class BattleExtendedService
             defenderHp -= damage;
 
             if (defenderHp <= 0)
-                break;
+                return new Battle
+                {
+                    MonsterA = monsterA.Id,
+                    MonsterB = monsterB.Id,
+                    Winner = attacker.Id
+                };
 
             int counterDamage = Math.Max(1, defender.Attack - attacker.Defense);
             attackerHp -= counterDamage;
 
             if (attackerHp <= 0)
             {
-                var temp = attacker;
-                attacker = defender;
-                break;
+                return new Battle
+                {
+                    MonsterA = monsterA.Id,
+                    MonsterB = monsterB.Id,
+                    Winner = defender.Id
+                };
             }
         }
-
-        return new Battle
-        {
-            MonsterA = monsterA.Id,
-            MonsterB = monsterB.Id,
-            Winner = attacker.Id
-        };
     }
 
     private static Monster DetermineFirstAttacker(Monster m1, Monster m2)
